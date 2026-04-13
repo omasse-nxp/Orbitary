@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://b1g58rbqeqrvw"]
+
+[ext_resource type="PackedScene" uid="uid://bihnipp2wg46w" path="res://test asteroid.glb" id="1_a202f"]
+[ext_resource type="Script" uid="uid://b6mjq52pqbsf1" path="res://node_3d.gd" id="1_jka67"]
+[ext_resource type="Script" uid="uid://cjdx3rfo5bwl0" path="res://camera_3d.gd" id="2_i5arm"]
+[ext_resource type="Script" uid="uid://drorp14obn3pe" path="res://test_asteroid.gd" id="2_noarx"]
+[ext_resource type="Script" uid="uid://bnoivgseuw37r" path="res://rich_text_label.gd" id="4_r3fl7"]
+[ext_resource type="PackedScene" uid="uid://bxv6yb70u5b1c" path="res://ship 7.glb" id="7_4arys"]
+[ext_resource type="Script" uid="uid://b0p3yeppa7k4d" path="res://ship_7.gd" id="8_6iypd"]
+
+[node name="Node3D" type="Node3D" unique_id=66632979]
+script = ExtResource("1_jka67")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=674602906]
+transform = Transform3D(-0.47715873, -0.53498995, 0.6972125, 0, 0.7933533, 0.6087614, -0.87881714, 0.29047582, -0.37855545, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 56.0
+sky_mode = 1
+
+[node name="asteroid" parent="." unique_id=218499602 instance=ExtResource("1_a202f")]
+physics_interpolation_mode = 1
+transform = Transform3D(1, 0, 0, 0, 0.9999997, 0, 0, 0, 0.9999997, 0, 0, 50)
+axis_lock_linear_y = true
+script = ExtResource("2_noarx")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=363467007]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1879923743]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(256, 256)
+render_target_update_mode = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SubViewportContainer/SubViewport" unique_id=1252265885]
+custom_minimum_size = Vector2(512, 256)
+offset_right = 40.0
+offset_bottom = 40.0
+fit_content = true
+scroll_active = false
+script = ExtResource("4_r3fl7")
+
+[node name="ship" parent="." unique_id=766490093 instance=ExtResource("7_4arys")]
+unique_name_in_owner = true
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+axis_lock_linear_y = true
+script = ExtResource("8_6iypd")
+
+[node name="Camera3D" type="Camera3D" parent="ship" unique_id=278541371]
+unique_name_in_owner = true
+transform = Transform3D(-0.9999997, 0, 0.00073304964, 0, 1.0000001, 0, -0.00073304976, 0, -0.9999998, 0, 8, -16)
+keep_aspect = 0
+fov = 75.88889
+size = 2.869
+near = 0.003
+script = ExtResource("2_i5arm")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="ship" unique_id=1418961424]
+transform = Transform3D(-3.999999, 0, 0.002932199, 0, 4, 0, -0.002932199, 0, -3.999999, 0, 0, 8)
+spot_range = 30.0
+spot_angle = 10.0
+spot_angle_attenuation = 0.29730174
