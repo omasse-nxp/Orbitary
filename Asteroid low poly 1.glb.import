@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bihnipp2wg46w"
-path="res://.godot/imported/test asteroid.glb-0b6776aba85675fd33bc75d0f6d94801.scn"
+uid="uid://bpiqd64fgmbc8"
+path="res://.godot/imported/Asteroid low poly 1.glb-cc315f914446f70d9ec8aecbc2751bbb.scn"
 
 [deps]
 
-source_file="res://test asteroid.glb"
-dest_files=["res://.godot/imported/test asteroid.glb-0b6776aba85675fd33bc75d0f6d94801.scn"]
+source_file="res://Asteroid low poly 1.glb"
+dest_files=["res://.godot/imported/Asteroid low poly 1.glb-cc315f914446f70d9ec8aecbc2751bbb.scn"]
 
 [params]
 
@@ -39,4 +39,4 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={}
 gltf/naming_version=2
-gltf/embedded_image_handling=2
+gltf/embedded_image_handling=1

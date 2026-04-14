@@ -1,12 +1,22 @@
 [gd_scene format=3 uid="uid://b1g58rbqeqrvw"]
 
-[ext_resource type="PackedScene" uid="uid://bihnipp2wg46w" path="res://test asteroid.glb" id="1_a202f"]
 [ext_resource type="Script" uid="uid://b6mjq52pqbsf1" path="res://node_3d.gd" id="1_jka67"]
 [ext_resource type="Script" uid="uid://cjdx3rfo5bwl0" path="res://camera_3d.gd" id="2_i5arm"]
-[ext_resource type="Script" uid="uid://drorp14obn3pe" path="res://test_asteroid.gd" id="2_noarx"]
 [ext_resource type="Script" uid="uid://bnoivgseuw37r" path="res://rich_text_label.gd" id="4_r3fl7"]
+[ext_resource type="PackedScene" uid="uid://bpiqd64fgmbc8" path="res://Asteroid low poly 1.glb" id="6_i5arm"]
 [ext_resource type="PackedScene" uid="uid://bxv6yb70u5b1c" path="res://ship 7.glb" id="7_4arys"]
 [ext_resource type="Script" uid="uid://b0p3yeppa7k4d" path="res://ship_7.gd" id="8_6iypd"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wc5p8"]
+custom_solver_bias = 0.245
+size = Vector3(16, 4, 14)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_i5arm"]
+bounce = 4.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jsk3o"]
+radius = 4.0
+height = 11.0
 
 [node name="Node3D" type="Node3D" unique_id=66632979]
 script = ExtResource("1_jka67")
@@ -16,12 +26,6 @@ transform = Transform3D(-0.47715873, -0.53498995, 0.6972125, 0, 0.7933533, 0.608
 shadow_enabled = true
 directional_shadow_max_distance = 56.0
 sky_mode = 1
-
-[node name="asteroid" parent="." unique_id=218499602 instance=ExtResource("1_a202f")]
-physics_interpolation_mode = 1
-transform = Transform3D(1, 0, 0, 0, 0.9999997, 0, 0, 0, 0.9999997, 0, 0, 50)
-axis_lock_linear_y = true
-script = ExtResource("2_noarx")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=363467007]
 offset_right = 40.0
@@ -45,6 +49,8 @@ script = ExtResource("4_r3fl7")
 unique_name_in_owner = true
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
 axis_lock_linear_y = true
+mass = 5.0
+gravity_scale = 0.0
 script = ExtResource("8_6iypd")
 
 [node name="Camera3D" type="Camera3D" parent="ship" unique_id=278541371]
@@ -61,3 +67,17 @@ transform = Transform3D(-3.999999, 0, 0.002932199, 0, 4, 0, -0.002932199, 0, -3.
 spot_range = 30.0
 spot_angle = 10.0
 spot_angle_attenuation = 0.29730174
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ship" unique_id=1393729071]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0245495, 1.0861425)
+shape = SubResource("BoxShape3D_wc5p8")
+
+[node name="Asteroid low poly 1" parent="." unique_id=558527529 instance=ExtResource("6_i5arm")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 50)
+axis_lock_linear_y = true
+mass = 0.001
+physics_material_override = SubResource("PhysicsMaterial_i5arm")
+gravity_scale = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Asteroid low poly 1" unique_id=916932924]
+shape = SubResource("CapsuleShape3D_jsk3o")
