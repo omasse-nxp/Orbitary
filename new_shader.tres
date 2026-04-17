@@ -1,0 +1,55 @@
+[gd_resource type="Shader" format=3 uid="uid://cpbvudf84fjfr"]
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+uniform sampler2D BaseColorTexture : source_color, filter_nearest;
+uniform sampler2D attributs : hint_default_black, filter_nearest, repeat_enable;
+uniform sampler2D Emission : hint_default_black, filter_nearest, repeat_enable;
+uniform float EmissionForce : hint_range(1.0, 20.0) = 10.0;
+
+
+
+void fragment() {
+	vec4 n_out2p0;
+// Texture2D:2
+	n_out2p0 = texture(BaseColorTexture, UV);
+
+
+	vec4 n_out3p0;
+// Texture2D:3
+	n_out3p0 = texture(attributs, UV);
+
+
+// VectorDecompose:11
+	float n_out11p0 = vec3(n_out3p0.xyz).x;
+	float n_out11p1 = vec3(n_out3p0.xyz).y;
+
+
+// FloatFunc:12
+	float n_out12p0 = 1.0 - n_out11p1;
+
+
+	vec4 n_out4p0;
+// Texture2D:4
+	n_out4p0 = texture(Emission, UV);
+
+
+// FloatParameter:9
+	float n_out9p0 = EmissionForce;
+
+
+// VectorOp:10
+	vec3 n_out10p0 = vec3(n_out4p0.xyz) * vec3(n_out9p0);
+
+
+// Output:0
+	ALBEDO = vec3(n_out2p0.xyz);
+	METALLIC = n_out11p0;
+	ROUGHNESS = n_out12p0;
+	EMISSION = n_out10p0;
+
+
+}
+"
