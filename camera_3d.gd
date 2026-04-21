@@ -1,10 +1,8 @@
 extends Camera3D
 
 var _mouse_input : bool = false
-var _mouse_rotation : Vector3
 var _rotation_input : float
 var _tilt_input : float
-var _camera_rotation : Vector3
 
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
 @export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
@@ -17,7 +15,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	_update_camera(delta)
+	_update_camera()
 	pass
 
 func _unhandled_input(event):
@@ -27,7 +25,7 @@ func _unhandled_input(event):
 		_tilt_input = -event.relative.y * MOUSE_SENSITIVITY
 		
 
-func _update_camera(delta):
+func _update_camera():
 	if(Input.is_action_just_pressed("scrollUp")):
 		global_position.z -= (1.0 * MOUSE_SENSITIVITY)
 	if(Input.is_action_just_pressed("scrollDown")):

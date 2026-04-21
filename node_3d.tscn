@@ -1,6 +1,8 @@
-[gd_scene load_steps=21 format=4 uid="uid://b1g58rbqeqrvw"]
+[gd_scene load_steps=23 format=4 uid="uid://b1g58rbqeqrvw"]
 
 [ext_resource type="Script" uid="uid://b6mjq52pqbsf1" path="res://node_3d.gd" id="1_jka67"]
+[ext_resource type="PackedScene" uid="uid://b0nt4n13a6448" path="res://addons/starlight/Stars.tscn" id="1_xvs24"]
+[ext_resource type="Script" uid="uid://dt4vmfxl4e76e" path="res://addons/starlight/StarGenerator.gd" id="2_6mf2e"]
 [ext_resource type="Script" uid="uid://cjdx3rfo5bwl0" path="res://camera_3d.gd" id="2_i5arm"]
 [ext_resource type="Shader" uid="uid://cpbvudf84fjfr" path="res://new_shader.tres" id="4_6iypd"]
 [ext_resource type="Script" uid="uid://bnoivgseuw37r" path="res://rich_text_label.gd" id="4_r3fl7"]
@@ -8,8 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://dn76odprwxeim" path="res://ship 7_ImphenziaPixPal_Emission.png" id="6_cdqbm"]
 [ext_resource type="PackedScene" uid="uid://bpiqd64fgmbc8" path="res://Asteroid low poly 1.glb" id="6_i5arm"]
 [ext_resource type="Texture2D" uid="uid://bk8tmcu3wwvdp" path="res://ship 7_ImphenziaPixPal_Attributes.png" id="7_imku0"]
-[ext_resource type="Texture2D" uid="uid://dj8ymdxy0pef3" path="res://sky.png" id="7_wc5p8"]
 [ext_resource type="Script" uid="uid://b0p3yeppa7k4d" path="res://ship_7.gd" id="8_6iypd"]
+[ext_resource type="PackedScene" uid="uid://criycfoey6hoh" path="res://asteroid low poly 2.glb" id="10_6iypd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wlxy5"]
 render_priority = 0
@@ -78,22 +80,18 @@ bounce = 4.0
 radius = 4.0
 height = 11.0
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_jsk3o"]
-panorama = ExtResource("7_wc5p8")
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_6iypd"]
+bounce = 1.0
 
-[sub_resource type="Sky" id="Sky_4arys"]
-sky_material = SubResource("PanoramaSkyMaterial_jsk3o")
+[sub_resource type="SphereShape3D" id="SphereShape3D_tereu"]
+radius = 5.129
 
 [sub_resource type="Environment" id="Environment_6iypd"]
-background_mode = 2
-sky = SubResource("Sky_4arys")
-ambient_light_source = 3
-ambient_light_color = Color(1, 1, 1, 1)
-ambient_light_sky_contribution = 0.5
+background_energy_multiplier = 0.0
+ambient_light_energy = 0.0
 glow_enabled = true
-glow_intensity = 0.5
 
-[node name="Node3D" type="Node3D"]
+[node name="Orbitary" type="Node3D"]
 script = ExtResource("1_jka67")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
@@ -146,12 +144,19 @@ shape = SubResource("BoxShape3D_wc5p8")
 [node name="Asteroid low poly 1" parent="." instance=ExtResource("6_i5arm")]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 50)
 axis_lock_linear_y = true
-mass = 0.001
 physics_material_override = SubResource("PhysicsMaterial_i5arm")
 gravity_scale = 0.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Asteroid low poly 1"]
 shape = SubResource("CapsuleShape3D_jsk3o")
+
+[node name="asteroid low poly 2" parent="." instance=ExtResource("10_6iypd")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 2, 0, 70)
+axis_lock_linear_y = true
+physics_material_override = SubResource("PhysicsMaterial_6iypd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="asteroid low poly 2"]
+shape = SubResource("SphereShape3D_tereu")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_6iypd")
@@ -163,3 +168,10 @@ light_specular = 4.0
 shadow_enabled = true
 directional_shadow_mode = 0
 sky_mode = 1
+
+[node name="Stars" parent="." instance=ExtResource("1_xvs24")]
+script = ExtResource("2_6mf2e")
+size = 2000.0
+star_count = 200
+rng_seed = 1234
+generate_at_origin = false
